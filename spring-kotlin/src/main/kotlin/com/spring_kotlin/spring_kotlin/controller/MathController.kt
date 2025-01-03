@@ -1,6 +1,6 @@
 package com.spring_kotlin.spring_kotlin.controller
 
-import com.spring_kotlin.spring_kotlin.exception.UnsupportedMathOperationException
+import com.spring_kotlin.spring_kotlin.exception.ResourceNotFoundException
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -46,7 +46,7 @@ class MathController {
         return number
             ?.replace(",", ".")
             ?.toDoubleOrNull()
-            ?: throw UnsupportedMathOperationException("Número inválido: $number")
+            ?: throw ResourceNotFoundException("Número inválido: $number")
     }
 
     private fun operate(
