@@ -1,5 +1,6 @@
 package com.spring_kotlin.spring_kotlin.controller
 
+import com.spring_kotlin.spring_kotlin.data.vo.v1.PersonVO
 import com.spring_kotlin.spring_kotlin.model.Person
 import com.spring_kotlin.spring_kotlin.services.PersonService
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,22 +23,22 @@ class PersonController {
     private lateinit var service: PersonService
 
     @GetMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getById(@PathVariable(value = "id") id: Long): Person {
+    fun getById(@PathVariable(value = "id") id: Long): PersonVO {
         return service.findById(id)
     }
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun findAll(): List<Person> {
+    fun findAll(): List<PersonVO> {
         return service.findAll()
     }
 
     @PostMapping(produces = [MediaType.APPLICATION_JSON_VALUE], consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun create(@RequestBody person: Person): Person {
+    fun create(@RequestBody person: PersonVO): PersonVO {
         return service.create(person)
     }
 
     @PutMapping(produces = [MediaType.APPLICATION_JSON_VALUE], consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun update(@RequestBody person: Person): Person {
+    fun update(@RequestBody person: PersonVO): PersonVO {
         return service.update(person)
     }
 
@@ -46,4 +47,5 @@ class PersonController {
         service.delete(id)
         return ResponseEntity.noContent().build<Any>()
     }
+
 }
