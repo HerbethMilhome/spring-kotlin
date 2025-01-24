@@ -1,20 +1,26 @@
 package com.spring_kotlin.spring_kotlin.services
 
 import com.spring_kotlin.spring_kotlin.data.vo.v1.PersonVO
+import com.spring_kotlin.spring_kotlin.data.vo.v2.PersonVO as PersonVOV2
 import com.spring_kotlin.spring_kotlin.exception.ResourceNotFoundException
 import com.spring_kotlin.spring_kotlin.mapper.DozerMapper
+import com.spring_kotlin.spring_kotlin.mapper.custom.PersonMapper
 import com.spring_kotlin.spring_kotlin.model.Person
 import com.spring_kotlin.spring_kotlin.repository.PersonRepository
-import org.hibernate.engine.internal.ManagedTypeHelper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
+
+
 
 @Service
 class PersonService {
 
     @Autowired
     private lateinit var repository: PersonRepository
+
+    @Autowired
+    private lateinit var mapper: PersonMapper
 
     private val logger = Logger.getLogger(PersonService::class.java.name)
 
@@ -35,6 +41,12 @@ class PersonService {
         logger.info("create new person. ${person.firstName}")
         val entity: Person = DozerMapper.parseObject(person, Person::class.java)
         return DozerMapper.parseObject(repository.save(entity), PersonVO::class.java)
+    }
+
+    fun createV2(person: PersonVOV2): PersonVOV2 {
+        logger.info("create new person. ${person.firstName}")
+        val entity: Person = mapper.mapVOToEntity(person)
+        return mapper.mapEntityToVO(repository.save(entity))
     }
 
     fun update(person: PersonVO): PersonVO {

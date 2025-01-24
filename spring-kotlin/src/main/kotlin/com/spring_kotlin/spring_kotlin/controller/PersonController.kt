@@ -1,7 +1,7 @@
 package com.spring_kotlin.spring_kotlin.controller
 
 import com.spring_kotlin.spring_kotlin.data.vo.v1.PersonVO
-import com.spring_kotlin.spring_kotlin.model.Person
+import com.spring_kotlin.spring_kotlin.data.vo.v2.PersonVO as PersonVOV2
 import com.spring_kotlin.spring_kotlin.services.PersonService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -35,6 +35,11 @@ class PersonController {
     @PostMapping(produces = [MediaType.APPLICATION_JSON_VALUE], consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun create(@RequestBody person: PersonVO): PersonVO {
         return service.create(person)
+    }
+
+    @PostMapping("/v2", produces = [MediaType.APPLICATION_JSON_VALUE], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun createV2(@RequestBody person: PersonVOV2): PersonVOV2 {
+        return service.createV2(person)
     }
 
     @PutMapping(produces = [MediaType.APPLICATION_JSON_VALUE], consumes = [MediaType.APPLICATION_JSON_VALUE])
